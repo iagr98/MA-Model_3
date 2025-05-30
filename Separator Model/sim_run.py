@@ -5,7 +5,12 @@ import pandas as pd
 import helper_functions as hf
 
 def init_sim(filename, N_x=101):
-    Set = sp.Settings(N_x)
+    if (filename == "Paraffin_flut_20C.xlsx"):
+        Set = sp.Settings(N_x=N_x, L=0.56, D=0.15, h_c_0=0.055, h_dis_0=0.04)
+    elif(filename == "niba_V1.xlsx" or filename == "niba_V2.xlsx" or filename == "niba_V3.xlsx" or filename == "niba_V4.xlsx"):
+        Set = sp.Settings(N_x=N_x, L=1.0, D=0.2, h_c_0=0.1, h_dis_0=0.03)
+    else:
+        print('Test does not belong to either Ye or Niba.')
     SubSys = sp.Substance_System()
     SubSys.update(filename)
     return sm.Simulation(Set, SubSys)
@@ -33,7 +38,7 @@ def calc_sensitivity(Sims, p):
     print('sensitivity ratio between p1 and p2 is: ' + str(Q))
     print('-------------------------------------------')
 
-def run_sim(filename, N_x=101, a_tol=1e-6):
+def run_sim(filename, N_x=101, a_tol=1e-7):
     Sim = init_sim(filename, N_x)
     Sim.calcInitialConditions()
     Sim.simulate_ivp(veloConst=False, atol=a_tol)
@@ -49,8 +54,8 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    N_x = 101
-    a_tol = 1e-6
+    N_x = 151
+    a_tol = 1e-7
     Sim = run_sim(filename, N_x=N_x, a_tol=a_tol)
 
     # Sim.calcInitialConditions()

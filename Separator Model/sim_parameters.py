@@ -7,24 +7,24 @@ import helper_functions as hf
 
 class Settings():
 
-    def __init__(self, N_x=101):
+    def __init__(self, N_x=101, L=0.56, D=0.15, h_c_0=0.055, h_dis_0=0.04):
         # simulation time
-        self.T = 120
-        self.N_t = 241
+        self.T = 200
+        self.N_t = 401
         self.t = np.linspace(0, self.T, self.N_t)
         self.dt = self.t[1] - self.t[0]
 
         # settler geometry
         self.N_x = N_x
-        self.L = 0.56    
-        self.D = 0.15
+        self.L = L    
+        self.D = D
         self.x = np.linspace(0, self.L, self.N_x)
         self.dl = self.x[1]-self.x[0]
         self.A = np.pi / 4 * self.D**2
         self.delta_V = self.A * self.dl
 
-        self.h_c_0 = 0.055
-        self.h_dis_0 = 0.04
+        self.h_c_0 = h_c_0
+        self.h_dis_0 = h_dis_0
 
     def reduce_Nx(self, dNx=10, T=100): # T anpassen, wenn T in Klasse Settings geändert wird!!!!
         self.T = T
