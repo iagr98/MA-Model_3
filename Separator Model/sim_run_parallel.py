@@ -5,10 +5,10 @@ import joblib
 import helper_functions as hf
 from sim_run import run_sim
 
-N_CPU = 8
-filename = "Paraffin_flut_20C.xlsx"
-# filename = "niba_V2.xlsx"
-N_x = [51, 81, 101, 151, 201, 251, 301, 351]
+N_CPU = 6
+# filename = "Paraffin_flut_20C.xlsx"
+filename = "niba_V2.xlsx"
+N_x = [51, 61, 71, 81, 91, 101, 151, 201, 301, 401, 501, 601]
 atol = 1e-7
 
 var = 'N_x'
@@ -40,7 +40,7 @@ if __name__ == "__main__":
     plt.figure(figsize=(8, 5))
     plt.plot(df['N_x'], df['V_dis_total'], marker='o')         # Update parameter in first place
     # plt.xscale('log')  # da atol logarithmisch skaliert ist
-    plt.yscale('log')  # da atol logarithmisch skaliert ist
+    # plt.yscale('log')  # da atol logarithmisch skaliert ist
     plt.xlabel('N_x')                                          # Change x-label
     plt.ylabel('V_dis')                                         
     plt.title(f'Gitterunabhängigkeitsanalyse ({var})')
