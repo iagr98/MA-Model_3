@@ -20,7 +20,7 @@ def parallel_simulation(params):
     try:
         Sim = run_sim(exp, phi_0, dV_ges, eps_0)
         return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
-                'V_dis_total': Sim.V_dis_total, 'Sep. Eff.': Sim.E,
+                'V_dis_total': Sim.V_dis_total,
                 'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'}
     except Exception as e:
         print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}: {str(e)}")

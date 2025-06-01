@@ -35,6 +35,7 @@ class Simulation():
         self.u_d_balance = 0
         self.u_c_balance = 0
         self.vol_balance = 0
+        self.cfl = 0
 
     def set_dVges(self, dVges):
         self.Sub.dV_ges = dVges * 1e-6 / 3.6
@@ -50,8 +51,6 @@ class Simulation():
         # h_dis_0 = self.Sub.h_p_sim[0] /1000     # Start value for the height of the dpz [m]
         h_c_0 = self.Set.h_c_0
         h_dis_0 = self.Set.h_dis_0
-
-        print('CFL number: ', self.u0 * self.Set.dt / self.Set.dl)
 
         ###################################################################################
         # # Numerische Lösung notwendig, da nicht direkt von Höhe der dicht gepackten Schicht auf das Volumen geschlossen werden kann
@@ -335,8 +334,10 @@ class Simulation():
         print(self.sol.message)
         print('Simulation ends at t = ' + str(self.Set.t[-1]) + ' s')
         self.vol_balance = hf.calculate_volume_balance(self)
-        print('V_dis_tot =', np.sum(self.V_dis[:, -1]), 'm3', '. Volume imbalance = ',self.vol_balance ,'%')
-        # print('Shape of resulting arrays: ' + str(np.shape(self.V_dis)))
+        self.V_dis_total = np.sum(self.V_dis[:, -1])
+        self.cfl = hf.calculate_cfl(self)
+        print('V_dis_tot =', self.V_dis_total , 'm3', '. Volume imbalance = ',self.vol_balance ,'%')
+        print('N_x:', self.Set.N_x, '. CFL number: ', self.cfl)
         h_c = getHeightArray(self.V_c[:, len(self.Set.t) - 1]/self.Set.dl, self.Set.D/2)
         h_c_dis = getHeightArray((self.V_c[:, len(self.Set.t) - 1] + self.V_dis[:, len(self.Set.t) - 1])/self.Set.dl, self.Set.D/2)
         h_dis = (np.max(h_c_dis) - np.min(h_c))
