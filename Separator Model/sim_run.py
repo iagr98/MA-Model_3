@@ -4,10 +4,23 @@ import numpy as np
 import pandas as pd
 import helper_functions as hf
 
-def init_sim(filename, N_x=101):
-    Set = sp.Settings(N_x)
+def init_sim(exp, phi_0, dV_ges, eps_0, N_x=101):
+    if (exp == "ye"):
+        filename = "Paraffin_flut_20C.xlsx"
+        Set = sp.Settings(N_x=N_x, L=0.56, D=0.15, h_c_0=0.055, h_dis_0=0.04)
+    elif(exp == "niba1" or exp == "niba2" or exp == "niba3" or exp == "niba4"):
+        Set = sp.Settings(N_x=N_x, L=1.0, D=0.2, h_c_0=0.1, h_dis_0=0.03)
+        filename = "niba_V1.xlsx" if exp == "niba1" else \
+        "niba_V2.xlsx" if exp == "niba2" else \
+        "niba_V3.xlsx" if exp == "niba3" else \
+        "niba_V4.xlsx" if exp == "niba4" else None
+    else:
+        print('Test does not belong to either Ye or Niba.')
     SubSys = sp.Substance_System()
     SubSys.update(filename)
+    SubSys.phi_0 = phi_0
+    SubSys.dV_ges = dV_ges / 3.6 * 1e-6
+    SubSys.eps_0 = eps_0
     return sm.Simulation(Set, SubSys)
 
 def init_sims(filename, numberSims):
@@ -33,8 +46,8 @@ def calc_sensitivity(Sims, p):
     print('sensitivity ratio between p1 and p2 is: ' + str(Q))
     print('-------------------------------------------')
 
-def run_sim(filename, N_x=101, a_tol=1e-6):
-    Sim = init_sim(filename, N_x)
+def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, N_x=101, a_tol=1e-6):
+    Sim = init_sim(exp, phi_0, dV_ges, eps_0, N_x)
     Sim.calcInitialConditions()
     Sim.simulate_ivp(veloConst=False, atol=a_tol)
     return Sim
@@ -44,14 +57,20 @@ def run_sim(filename, N_x=101, a_tol=1e-6):
 if __name__ == "__main__":
     # example more examples in file allExamples.py
     # some plotting functions may only work for Simulation with a Sim Object calculated with simulate_upwind() and not ivp!
-    filename = 'Paraffin_flut_20C.xlsx'
+    # filename = 'Paraffin_flut_20C.xlsx'
     # filename = 'niba_V1.xlsx'
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
     N_x = 101
-    a_tol = 1e-6
-    Sim = run_sim(filename, N_x=N_x, a_tol=a_tol)
+    a_tol = 1e-7
+
+    exp = "niba4"
+    phi_0 = 630e-6
+    dV_ges = 1500
+    eps_0 = 0.3
+
+    Sim = run_sim(exp, phi_0, dV_ges, eps_0, N_x, a_tol)
 
     # Sim.calcInitialConditions()
     # # #Sim.simulate_upwind(veloConst=True) # boolean velo defines whether u is assumed constant or not (default:True)
