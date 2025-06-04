@@ -65,10 +65,10 @@ if __name__ == "__main__":
     N_x = 101
     a_tol = 1e-7
 
-    exp = "niba4"
-    phi_0 = 630e-6
-    dV_ges = 1500
-    eps_0 = 0.3
+    exp = "ye"
+    phi_0 = 610e-6
+    dV_ges = 240
+    eps_0 = 0.2
 
     Sim = run_sim(exp, phi_0, dV_ges, eps_0, N_x, a_tol)
 

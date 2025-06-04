@@ -6,7 +6,7 @@ import helper_functions as hf
 from sim_run import run_sim
 
 N_CPU = 5
-N_x = [101, 201, 301, 401, 501, 601, 701, 801, 901, 1001]
+N_x = [201, 401, 501, 601, 801, 1001, 1101, 1201, 1501, 1801]
 var = 'N_x'                                                                 # Update
 
 
