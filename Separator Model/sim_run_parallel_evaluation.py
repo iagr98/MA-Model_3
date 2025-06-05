@@ -4,7 +4,7 @@ import joblib
 import helper_functions as hf
 from sim_run import run_sim
 
-N_CPU = 7
+N_CPU = 8
 
 
 df = pd.read_excel("Input/data_main.xlsx", sheet_name="main")
@@ -33,5 +33,5 @@ if __name__ == "__main__":
     
     # Save results
     df_results = pd.DataFrame(results)
-    df_results.to_csv('simulation_results_parallel_cos.csv', index=False)
+    df_results.to_csv('simulation_results_parallel_evaluation.csv', index=False)
     print("Alle Simulationen abgeschlossen. Ergebnisse gespeichert.")
