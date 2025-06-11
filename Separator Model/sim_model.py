@@ -189,7 +189,7 @@ class Simulation():
         eps_p = self.Sub.eps_p
         dV_ges = self.Sub.dV_ges
         u_0 = (self.Sub.dV_ges / (np.pi * self.Set.D**2 / 4))
-        self.u_0 = u_0
+        self.u_0 = u_0        
         # u_dis = np.linspace(u_0,0,len(V_dis))                           # Option 1 (Triangle)
         # u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**2)            # Option 2 (Parabola) u_dis''<0
         # u_dis = u_0 * (np.linspace(1, 0, len(V_dis))**2)                # Option 3 (Parabola) u_dis''>0

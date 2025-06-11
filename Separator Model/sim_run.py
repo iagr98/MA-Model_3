@@ -46,7 +46,7 @@ def calc_sensitivity(Sims, p):
     print('sensitivity ratio between p1 and p2 is: ' + str(Q))
     print('-------------------------------------------')
 
-def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, N_x=101, a_tol=1e-7):
+def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, N_x=201, a_tol=1e-7):
     Sim = init_sim(exp, phi_0, dV_ges, eps_0, N_x)
     Sim.calcInitialConditions()
     Sim.simulate_ivp(veloConst=False, atol=a_tol)
@@ -79,5 +79,5 @@ if __name__ == "__main__":
     # labels = []
     # # #sm.plot_comparison(Sims, title='Hexan o in w, o/w = 1/1, dV_ges=100 L/h')
     # # # Keys for animated Plots: 'velo', 'sauter', 'heights', 'tau'
-    plots = ['heights', 'velo', 'sauter']
+    plots = ['heights', 'sauter']
     Sim.plot_anim(plots)
