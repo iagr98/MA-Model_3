@@ -4,7 +4,7 @@ import joblib
 import helper_functions as hf
 from sim_run import run_sim
 
-N_CPU = 2
+N_CPU = 8
 
 experiment = "sozh" # "main" if ye + niba tests, "sozh" tests from AVT.FVT
 
