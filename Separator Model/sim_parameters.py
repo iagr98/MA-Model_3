@@ -25,8 +25,6 @@ class Settings():
 
         self.h_c_0 = h_c_0
         self.h_dis_0 = h_dis_0
-        self.h_c_0 = h_c_0
-        self.h_dis_0 = h_dis_0
 
     def reduce_Nx(self, dNx=10, T=100): # T anpassen, wenn T in Klasse Settings geändert wird!!!!
         self.T = T

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import helper_functions as hf
 
-def init_sim(exp, phi_0, dV_ges, eps_0, N_x=101):
+def init_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, N_x):
     if (exp == "ye"):
         filename = "Paraffin_flut_20C.xlsx"
         Set = sp.Settings(N_x=N_x, L=0.56, D=0.15, h_c_0=0.055, h_dis_0=0.04)
@@ -14,6 +14,15 @@ def init_sim(exp, phi_0, dV_ges, eps_0, N_x=101):
         "niba_V2.xlsx" if exp == "niba2" else \
         "niba_V3.xlsx" if exp == "niba3" else \
         "niba_V4.xlsx" if exp == "niba4" else None
+    elif(exp == "2mmol_21C" or exp == "2mmol_30C" or exp == "5mmol_30C" or exp == "10mmol_21C" or exp == "10mmol_30C" or exp == "15mmol_20C" or exp == "15mmol_30C"):
+        Set = sp.Settings(N_x=N_x, L=1.3, D=0.2, h_c_0=h_c_0, h_dis_0=h_dis_0)
+        filename = "2mmolNa2CO3_21C.xlsx" if exp == "2mmol_21C" else \
+        "2mmolNa2CO3_30C.xlsx" if exp == "2mmol_30C" else \
+        "5mmolNa2CO3_30C.xlsx" if exp == "5mmol_30C" else \
+        "10mmolNa2CO3_21C.xlsx" if exp == "10mmol_21C" else \
+        "10mmolNa2CO3_30C.xlsx" if exp == "10mmol_30C" else \
+        "15mmolNa2CO3_20C.xlsx" if exp == "15mmol_20C" else \
+        "15mmolNa2CO3_30C.xlsx" if exp == "15mmol_30C" else None
     else:
         print('Test does not belong to either Ye or Niba.')
     SubSys = sp.Substance_System()
@@ -46,8 +55,8 @@ def calc_sensitivity(Sims, p):
     print('sensitivity ratio between p1 and p2 is: ' + str(Q))
     print('-------------------------------------------')
 
-def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, N_x=201, a_tol=1e-7):
-    Sim = init_sim(exp, phi_0, dV_ges, eps_0, N_x)
+def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, h_c_0=0.1, h_dis_0=0.05, N_x=201, a_tol=1e-7):
+    Sim = init_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, N_x)
     Sim.calcInitialConditions()
     Sim.simulate_ivp(veloConst=False, atol=a_tol)
     return Sim
@@ -62,15 +71,14 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    N_x = 101
-    a_tol = 1e-7
-
-    exp = "ye"
+    exp = "5mmol_30C"
     phi_0 = 610e-6
     dV_ges = 240
     eps_0 = 0.2
+    h_c_0 = 0.1
+    h_dis_0 = 0.05
 
-    Sim = run_sim(exp, phi_0, dV_ges, eps_0, N_x, a_tol)
+    Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0)
 
     # Sim.calcInitialConditions()
     # # #Sim.simulate_upwind(veloConst=True) # boolean velo defines whether u is assumed constant or not (default:True)
