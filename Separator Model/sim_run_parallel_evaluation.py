@@ -14,7 +14,7 @@ phi_0 = df['phi_0'].tolist()
 dV_ges = df['dV_ges'].tolist()
 eps_0 = df['eps_0'].tolist()
 if (experiment == "sozh"):
-    h_c_0 = df['h_c_0_DPZ_bot_mean'].tolist()   # CHANGE for option 1 or 2
+    h_c_0 = df['h_c_0'].tolist() 
     h_dis_0 = df['h_dis_max'].tolist()
 
 
