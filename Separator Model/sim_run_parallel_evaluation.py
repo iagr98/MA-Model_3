@@ -53,9 +53,9 @@ if __name__ == "__main__":
     elif(experiment == "sozh"):
         parameters = [(exp[i], phi_0[i], dV_ges[i], eps_0[i], h_c_0[i], h_dis_0[i]) for i in range(len(exp))]
     
-    results = joblib.Parallel(n_jobs=N_CPU)(joblib.delayed(parallel_simulation)(param) for param in parameters)
+    results = joblib.Parallel(n_jobs=N_CPU, backend='multiprocessing')(joblib.delayed(parallel_simulation)(param) for param in parameters)
     
     # Save results
     df_results = pd.DataFrame(results)
-    df_results.to_csv('simulation_results_parallel_evaluation_sozh_opt_2.csv', index=False)
+    df_results.to_csv('simulation_results_parallel_evaluation_sozh.csv', index=False)
     print("Alle Simulationen abgeschlossen. Ergebnisse gespeichert.")
