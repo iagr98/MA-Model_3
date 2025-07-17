@@ -36,6 +36,8 @@ class Simulation():
         self.u_c_balance = 0
         self.vol_balance = 0
         self.cfl = 0
+        self.h_dpz = []
+        self.h_c = []
 
     def set_dVges(self, dVges):
         self.Sub.dV_ges = dVges * 1e-6 / 3.6
@@ -346,6 +348,9 @@ class Simulation():
         a = np.where(np.abs(h_c_dis - h_c) < 1e-3)[0][0] if np.any(np.abs(h_c_dis - h_c) < 1e-3) else -1
         self.L_DPZ = a * self.Set.dl
         # print('Length of the DPZ at the end of the simulation: ', 1000 * self.L_DPZ, ' mm')
+        self.h_dpz = h_c_dis
+        self.h_c = h_c
+
 
     # Simulation mittels Upwind-Verfahren
     # adjust_dl erhöht die Anzahl zeitlicher Gitterpunkte, wenn Instabilität wegen zu hoher CFL-Zahl auftritt
