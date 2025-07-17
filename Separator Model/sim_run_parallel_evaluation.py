@@ -61,6 +61,9 @@ if __name__ == "__main__":
     h_dpz_columns = pd.DataFrame(df_results['h_dpz'].tolist())   # Convert h_dpz (list of arrays) into separate columns
     h_dpz_columns.columns = [f'h_dpz_{i}' for i in range(h_dpz_columns.shape[1])]
     df_results = df_results.drop(columns=['h_dpz'])
-    df_results = pd.concat([df_results, h_dpz_columns], axis=1)  # Concatenate V_dis columns with the main result dataframe
+    h_c_columns = pd.DataFrame(df_results['h_c'].tolist())   # Convert h_dpz (list of arrays) into separate columns
+    h_c_columns.columns = [f'h_c_{i}' for i in range(h_c_columns.shape[1])]
+    df_results = df_results.drop(columns=['h_c'])
+    df_results = pd.concat([df_results, h_dpz_columns, h_c_columns], axis=1)  # Concatenate V_dis columns with the main result dataframe
     df_results.to_csv('simulation_results_parallel_evaluation_detail.csv', index=False)
     print("Alle Simulationen abgeschlossen. Ergebnisse gespeichert.")
