@@ -73,7 +73,7 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    test = 10
+    test = 4
     data = pd.read_excel("Input/data_main.xlsx", sheet_name="detail_V_dis")
     exp = data['exp'][test]
     phi_0 = data['phi_0'][test]
