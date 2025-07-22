@@ -195,7 +195,8 @@ class Simulation():
         # u_dis = np.linspace(u_0,0,len(V_dis))                           # Option 1 (Triangle)
         # u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**2)            # Option 2 (Parabola) u_dis''<0
         # u_dis = u_0 * (np.linspace(1, 0, len(V_dis))**2)                # Option 3 (Parabola) u_dis''>0
-        u_dis = u_0 * np.cos(np.linspace(0, np.pi/2, self.Set.N_x))     # Option 4 (Cosinus) u_dis''<0
+        # u_dis = u_0 * np.cos(np.linspace(0, np.pi/2, self.Set.N_x))     # Option 4 (Cosinus) u_dis''<0
+        u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**3)            # Option 5 (3rd order polynomial)
         u_dis[-1] = 0
         A_dis = V_dis / dl
         A_d = V_d / dl

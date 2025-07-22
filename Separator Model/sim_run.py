@@ -73,12 +73,15 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    exp = "10mmol_30C"
-    phi_0 = 0.000484589
-    dV_ges = 750.2953382
-    eps_0 = 0.299969729
-    h_c_0 = 0.101920696
-    h_dis_0 = 0.1
+    test = 10
+    data = pd.read_excel("Input/data_main.xlsx", sheet_name="detail_V_dis")
+    exp = data['exp'][test]
+    phi_0 = data['phi_0'][test]
+    dV_ges = data['dV_ges'][test]
+    eps_0 = data['eps_0'][test]
+    h_c_0 = data['h_c_0'][test]
+    h_dis_0 = data['h_dis_max'][test]
+    print('Simulation inputs: exp={}, phi_0={}, dV_ges={}, eps_0={}'.format(exp, phi_0, dV_ges, eps_0))
 
     Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0)
 
