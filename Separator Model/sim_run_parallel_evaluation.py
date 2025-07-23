@@ -36,7 +36,7 @@ def parallel_simulation(params):
             Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0)
             return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
                 'h_c_0': h_c_0, 'h_dis_0': h_dis_0,
-                'V_dis_total': Sim.V_dis_total,
+                'V_dis_total': Sim.V_dis_total, 'dpz_flooded': Sim.h_dpz_status,
                 'h_dpz': Sim.h_dpz, 'h_c': Sim.h_c,
                 'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'}
     except Exception as e:
@@ -65,5 +65,5 @@ if __name__ == "__main__":
     h_c_columns.columns = [f'h_c_{i}' for i in range(h_c_columns.shape[1])]
     df_results = df_results.drop(columns=['h_c'])
     df_results = pd.concat([df_results, h_dpz_columns, h_c_columns], axis=1)  # Concatenate V_dis columns with the main result dataframe
-    df_results.to_csv('simulation_results_parallel_evaluation_detail.csv', index=False)
+    df_results.to_csv('simulation_results_parallel_evaluation_detail_2.2.csv', index=False)
     print("Alle Simulationen abgeschlossen. Ergebnisse gespeichert.")

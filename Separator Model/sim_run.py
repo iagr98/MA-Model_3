@@ -73,7 +73,7 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    test = 4
+    test = 12
     data = pd.read_excel("Input/data_main.xlsx", sheet_name="detail_V_dis")
     exp = data['exp'][test]
     phi_0 = data['phi_0'][test]
@@ -84,6 +84,7 @@ if __name__ == "__main__":
     print('Simulation inputs: exp={}, phi_0={}, dV_ges={}, eps_0={}'.format(exp, phi_0, dV_ges, eps_0))
 
     Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0)
+    print('dpz flooded? : ', Sim.h_dpz_status)
 
     # Sim.calcInitialConditions()
     # # #Sim.simulate_upwind(veloConst=True) # boolean velo defines whether u is assumed constant or not (default:True)

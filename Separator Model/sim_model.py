@@ -38,6 +38,7 @@ class Simulation():
         self.cfl = 0
         self.h_dpz = []
         self.h_c = []
+        self.h_dpz_status = False  # boolean to check if DPZ is present at the end of the simulation
 
     def set_dVges(self, dVges):
         self.Sub.dV_ges = dVges * 1e-6 / 3.6
@@ -351,6 +352,7 @@ class Simulation():
         # print('Length of the DPZ at the end of the simulation: ', 1000 * self.L_DPZ, ' mm')
         self.h_dpz = h_c_dis
         self.h_c = h_c
+        self.h_dpz_status = True if max(h_c_dis) > h_c_dis[0] else False
 
 
     # Simulation mittels Upwind-Verfahren
