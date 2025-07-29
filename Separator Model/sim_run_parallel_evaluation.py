@@ -15,7 +15,7 @@ dV_ges = df['dV_ges'].tolist()
 eps_0 = df['eps_0'].tolist()
 if (experiment == "sozh" or experiment == "detail_V_dis"):
     h_c_0 = df['h_c_0'].tolist() 
-    h_dis_0 = df['h_dis_max'].tolist()
+    h_dis_0 = df['h_dis_0'].tolist()
 
 
 

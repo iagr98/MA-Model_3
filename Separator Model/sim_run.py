@@ -15,8 +15,7 @@ def init_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, N_x):
         "niba_V3.xlsx" if exp == "niba3" else \
         "niba_V4.xlsx" if exp == "niba4" else None
     elif(exp == "2mmol_21C" or exp == "2mmol_30C" or exp == "5mmol_30C" or exp == "10mmol_21C" or exp == "10mmol_30C" or exp == "15mmol_20C" or exp == "15mmol_30C"):
-        if (h_dis_0 > 0.05):
-            h_dis_0 = 0.05
+        h_dis_0 = min(h_dis_0, 0.05) if (h_dis_0!=0) else 0.05
         Set = sp.Settings(N_x=N_x, L=1.3, D=0.2, h_c_0=h_c_0, h_dis_0=h_dis_0)
         filename = "2mmolNa2CO3_21C.xlsx" if exp == "2mmol_21C" else \
         "2mmolNa2CO3_30C.xlsx" if exp == "2mmol_30C" else \
