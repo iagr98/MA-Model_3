@@ -39,6 +39,8 @@ class Simulation():
         self.h_dpz = []
         self.h_c = []
         self.h_dpz_status = False  # boolean to check if DPZ is present at the end of the simulation
+        self.condition_2 = False
+        self.status = 0
 
     def set_dVges(self, dVges):
         self.Sub.dV_ges = dVges * 1e-6 / 3.6
@@ -275,7 +277,7 @@ class Simulation():
         eps_p = self.Sub.eps_p
         sigma = self.Sub.sigma * np.ones(N_x)
         r_s_star = self.Sub.r_s_star * np.ones(N_x)
-        D = self.Set.D
+        A = self.Set.A
 
         a_tol = np.concatenate([atol*np.ones(N_x),              # V_dis
                                atol*np.ones(N_x),               # V_d
@@ -286,7 +288,12 @@ class Simulation():
         r_tol = atol*1e3
 
         def event(t, y):
-            return np.min(y[:N_x])  # event stops integration when V_dis<0
+            V_dis = y[:N_x]
+            V_c = y[2 * N_x: 3 * N_x]
+            V_tot = A*dl
+            condition_1 = np.min(V_dis) < 0 # (Boolean) Simulation stops if V_dis (DPZ) dissapears
+            self.condition_2 = np.any((V_c+V_dis)>=V_tot)   # (Boolean) Simulation stops if DPZ is flooded at any point of separator
+            return 0 if (condition_1 or self.condition_2) else 1
         event.terminal = True
 
         def fun(t, y):
@@ -327,6 +334,8 @@ class Simulation():
 
         # Lösung des Systems von ODEs
         self.sol = solve_ivp(fun, (0, self.Set.T), self.y0, t_eval=self.Set.t, rtol=r_tol, atol=a_tol, method='RK45', events=event)
+        self.status = self.sol.status
+        self.h_dpz_status = True if (self.status==-1 or self.condition_2) else False
 
         y = self.sol.y
         self.V_dis = y[: N_x]
@@ -352,7 +361,6 @@ class Simulation():
         # print('Length of the DPZ at the end of the simulation: ', 1000 * self.L_DPZ, ' mm')
         self.h_dpz = h_c_dis
         self.h_c = h_c
-        self.h_dpz_status = True if max(h_c_dis) > h_c_dis[0] else False
 
 
     # Simulation mittels Upwind-Verfahren
