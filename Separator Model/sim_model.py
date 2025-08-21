@@ -195,11 +195,8 @@ class Simulation():
         dV_ges = self.Sub.dV_ges
         u_0 = (self.Sub.dV_ges / (np.pi * self.Set.D**2 / 4))
         self.u_0 = u_0        
-        # u_dis = np.linspace(u_0,0,len(V_dis))                           # Option 1 (Triangle)
-        # u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**2)            # Option 2 (Parabola) u_dis''<0
-        # u_dis = u_0 * (np.linspace(1, 0, len(V_dis))**2)                # Option 3 (Parabola) u_dis''>0
-        # u_dis = u_0 * np.cos(np.linspace(0, np.pi/2, self.Set.N_x))     # Option 4 (Cosinus) u_dis''<0
-        u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**2.2)            # Option 5 (artificial order polynomial)
+        exponent = self.Set.exponent
+        u_dis = u_0 * (1 - np.linspace(0, 1, len(V_dis))**exponent)            # Option 5 (artificial order polynomial)
         u_dis[-1] = 0
         A_dis = V_dis / dl
         A_d = V_d / dl
@@ -278,6 +275,7 @@ class Simulation():
         sigma = self.Sub.sigma * np.ones(N_x)
         r_s_star = self.Sub.r_s_star * np.ones(N_x)
         A = self.Set.A
+        D = self.Set.D
 
         a_tol = np.concatenate([atol*np.ones(N_x),              # V_dis
                                atol*np.ones(N_x),               # V_d
@@ -290,10 +288,12 @@ class Simulation():
         def event(t, y):
             V_dis = y[:N_x]
             V_c = y[2 * N_x: 3 * N_x]
+            phi_32 = y[3 * N_x:]
             V_tot = A*dl
             condition_1 = np.min(V_dis) < 0 # (Boolean) Simulation stops if V_dis (DPZ) dissapears
             self.condition_2 = np.any((V_c+V_dis)>=V_tot)   # (Boolean) Simulation stops if DPZ is flooded at any point of separator
-            return 0 if (condition_1 or self.condition_2) else 1
+            condition_3 = np.max(phi_32) >= D    # (Boolean) Simulation stops if phi_32 greater-equal diamter of separator
+            return 0 if (condition_1 or self.condition_2 or condition_3) else 1
         event.terminal = True
 
         def fun(t, y):
