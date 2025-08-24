@@ -16,7 +16,7 @@ def parallel_simulation(params):
         # ye
         Sim = run_sim(exp, phi_0, dV_ges, eps_0, exponent=exponent)
         return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
-                'dpz_flooded': Sim.h_dpz_status,
+                'dpz_flooded': Sim.h_dpz_status,  'L_DPZ':Sim.L_DPZ,
                 'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'} 
         
         #sz
@@ -27,7 +27,7 @@ def parallel_simulation(params):
         #         'h_dpz': Sim.h_dpz, 'h_c': Sim.h_c,
         #         'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'}
     except Exception as e:
-        ye  
+        # ye  
         print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}: {str(e)}")
         return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0, 'exponent':exponent, 'error': str(e), 'status': 'failed'}
         

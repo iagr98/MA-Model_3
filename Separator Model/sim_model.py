@@ -349,18 +349,19 @@ class Simulation():
         self.vol_balance = hf.calculate_volume_balance(self)
         self.V_dis_total = np.sum(self.V_dis[:, -1])
         self.cfl = hf.calculate_cfl(self)
-        print('V_dis_tot =', self.V_dis_total , 'm3', '. Volume imbalance = ',self.vol_balance ,'%')
-        print('N_x:', self.Set.N_x, '. CFL number: ', self.cfl)
         h_c = getHeightArray(self.V_c[:, len(self.Set.t) - 1]/self.Set.dl, self.Set.D/2)
         h_c_dis = getHeightArray((self.V_c[:, len(self.Set.t) - 1] + self.V_dis[:, len(self.Set.t) - 1])/self.Set.dl, self.Set.D/2)
         h_dis = (np.max(h_c_dis) - np.min(h_c))
         self.H_DPZ = h_dis
+        a = -1 if self.condition_2 else np.argmin(self.V_dis[:, -1])
         # print('Height of the DPZ at the end of the simulation: ', 1000 * self.H_DPZ , ' mm')
-        a = np.where(np.abs(h_c_dis - h_c) < 1e-3)[0][0] if np.any(np.abs(h_c_dis - h_c) < 1e-3) else -1
-        self.L_DPZ = a * self.Set.dl
+        self.L_DPZ = self.Set.x[a]
         # print('Length of the DPZ at the end of the simulation: ', 1000 * self.L_DPZ, ' mm')
         self.h_dpz = h_c_dis
         self.h_c = h_c
+        print('V_dis_tot =', self.V_dis_total , 'm3', '. Volume imbalance = ',self.vol_balance ,'%')
+        print('dpz_flooded: ', self.h_dpz_status, 'L_DPZ[m]: ', self.L_DPZ)
+        print('')
 
 
     # Simulation mittels Upwind-Verfahren

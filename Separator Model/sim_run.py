@@ -72,21 +72,24 @@ if __name__ == "__main__":
     # filename = 'Hexan_1_1_o_in_w.xlsx'
     # filename = 'Butylacetat_5_6_220.xlsx'
 
-    test = 19
-    sheet = 'sozh'
+    test = 36
+    sheet = 'main'
     data = pd.read_excel("Input/data_main.xlsx", sheet_name=sheet)
     exp = data['exp'][test]
     phi_0 = data['phi_0'][test]
     dV_ges = data['dV_ges'][test]
     eps_0 = data['eps_0'][test]
-    h_c_0 = data['h_c_0'][test]
-    h_dis_0 = data['h_dis_0'][test]
+    if (exp=='ye' or exp=='niba'):
+        h_c_0 = []
+        h_dis_0 = []
+    else:
+        h_c_0 = data['h_c_0'][test]
+        h_dis_0 = data['h_dis_0'][test]
 
-    exponent = 10
+    exponent = 1.25
     print('Simulation inputs: exp={}, phi_0={}, dV_ges={}, eps_0={}, exponent={}'.format(exp, phi_0, dV_ges, eps_0, exponent))
 
-    Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, exponent)
-    print('dpz flooded? : ', Sim.h_dpz_status)
+    Sim = run_sim(exp=exp, phi_0=phi_0, dV_ges=dV_ges, eps_0=eps_0, h_c_0=h_c_0, h_dis_0=h_dis_0, exponent=exponent)
 
     # Sim.calcInitialConditions()
     # # #Sim.simulate_upwind(veloConst=True) # boolean velo defines whether u is assumed constant or not (default:True)
