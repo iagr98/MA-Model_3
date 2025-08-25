@@ -7,33 +7,33 @@ from sim_run import run_sim
 
 def parallel_simulation(params):
     # ye
-    exp, phi_0, dV_ges, eps_0, exponent = params
-    print(f"Start simulation with exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, exponent={exponent}")
+    # exp, phi_0, dV_ges, eps_0, exponent = params
+    # print(f"Start simulation with exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, exponent={exponent}")
     # sz
-    # exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, exponent = params
-    # print(f"Start simulation with exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, h_c_0={h_c_0}, h_dis_0={h_dis_0}, exponent={exponent}")
+    exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, exponent = params
+    print(f"Start simulation with exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, h_c_0={h_c_0}, h_dis_0={h_dis_0}, exponent={exponent}")
     try:
         # ye
-        Sim = run_sim(exp, phi_0, dV_ges, eps_0, exponent=exponent)
-        return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
-                'dpz_flooded': Sim.h_dpz_status,  'L_DPZ':Sim.L_DPZ,
-                'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'} 
+        # Sim = run_sim(exp, phi_0, dV_ges, eps_0, exponent=exponent)
+        # return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
+        #         'dpz_flooded': Sim.h_dpz_status,  'L_DPZ':Sim.L_DPZ,
+        #         'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'} 
         
         #sz
-        # Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, exponent=exponent)
-        # return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
-        #         'h_c_0': h_c_0, 'h_dis_0': h_dis_0,
-        #         'V_dis_total': Sim.V_dis_total, 'dpz_flooded': Sim.h_dpz_status,
-        #         'h_dpz': Sim.h_dpz, 'h_c': Sim.h_c,
-        #         'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'}
+        Sim = run_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, exponent=exponent)
+        return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0,
+                'h_c_0': h_c_0, 'h_dis_0': h_dis_0,
+                'V_dis_total': Sim.V_dis_total, 'dpz_flooded': Sim.h_dpz_status,
+                'h_dpz': Sim.h_dpz, 'h_c': Sim.h_c,
+                'Vol_imbalance [%]': hf.calculate_volume_balance(Sim), 'status': 'success'}
     except Exception as e:
         # ye  
-        print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}: {str(e)}")
-        return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0, 'exponent':exponent, 'error': str(e), 'status': 'failed'}
+        # print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}: {str(e)}")
+        # return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0, 'exponent':exponent, 'error': str(e), 'status': 'failed'}
         
         # sz
-        # print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, h_c_0={h_c_0}, h_dis_0={h_dis_0}, exponent={exponent}: {str(e)}")
-        # return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0, 'h_c_0': h_c_0, 'h_dis_0': h_dis_0, 'exponent':exponent, 'error': str(e), 'status': 'failed'}
+        print(f"Simulation failed for exp={exp}, phi_0={phi_0}, dV_ges={dV_ges}, eps_0={eps_0}, h_c_0={h_c_0}, h_dis_0={h_dis_0}, exponent={exponent}: {str(e)}")
+        return {'exp': exp, 'phi_0': phi_0, 'dV_ges': dV_ges, 'eps_0': eps_0, 'h_c_0': h_c_0, 'h_dis_0': h_dis_0, 'exponent':exponent, 'error': str(e), 'status': 'failed'}
 
 if __name__ == "__main__":
 
