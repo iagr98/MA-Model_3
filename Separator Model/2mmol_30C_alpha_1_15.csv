@@ -1,0 +1,11 @@
+experiment,alpha,total_guess,total_exp,total_guess_p
+2mmol_30C,1.0,0,2,0.0
+2mmol_30C,2.5,0,2,0.0
+2mmol_30C,5.0,1,2,0.5
+2mmol_30C,7.5,1,2,0.5
+2mmol_30C,10.0,1,2,0.5
+2mmol_30C,11.0,1,2,0.5
+2mmol_30C,12.0,1,2,0.5
+2mmol_30C,13.0,2,2,1.0
+2mmol_30C,14.0,2,2,1.0
+2mmol_30C,15.0,2,2,1.0
