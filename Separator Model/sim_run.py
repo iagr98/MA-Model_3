@@ -56,7 +56,29 @@ def calc_sensitivity(Sims, p):
     print('sensitivity ratio between p1 and p2 is: ' + str(Q))
     print('-------------------------------------------')
 
-def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, h_c_0=0.1, h_dis_0=0.05, N_x=201, a_tol=1e-7, exponent=2):
+def run_sim(exp="ye", phi_0=610e-6, dV_ges=240, eps_0=0.2, h_c_0=0.1, h_dis_0=0.05, N_x=201, a_tol=1e-7):
+    if (exp=='2mmol_21C'):
+        exponent = 2.0
+    elif(exp=='2mmol_30C'):
+        exponent = 13
+    elif(exp=='5mmol_30C'):
+        exponent = 14
+    elif(exp=='10mmol_21C' or exp=='10mmol_30C'):
+        exponent = 2.5
+    elif(exp=='15mmol_20C'):
+        exponent = 2.6
+    elif(exp=='15mmol_30C'):
+        exponent = 3.3
+    elif(exp=='ye' and dV_ges==160):
+        exponent = 1
+    elif(exp=='ye' and dV_ges==200):
+        exponent = 0.9
+    elif(exp=='ye' and dV_ges==240):
+        exponent = 1
+    elif(exp=='ye' and dV_ges==280):
+        exponent = 1.5
+    else:
+        exponent = 1.75
     Sim = init_sim(exp, phi_0, dV_ges, eps_0, h_c_0, h_dis_0, N_x, exponent)
     Sim.calcInitialConditions()
     Sim.simulate_ivp(veloConst=False, atol=a_tol)
@@ -86,10 +108,9 @@ if __name__ == "__main__":
         h_c_0 = data['h_c_0'][test]
         h_dis_0 = data['h_dis_0'][test]
 
-    exponent = 5
-    print('Simulation inputs: exp={}, phi_0={}, dV_ges={}, eps_0={}, exponent={}'.format(exp, phi_0, dV_ges, eps_0, exponent))
+    print('Simulation inputs: exp={}, phi_0={}, dV_ges={}, eps_0={}, exponent={}'.format(exp, phi_0, dV_ges, eps_0))
 
-    Sim = run_sim(exp=exp, phi_0=phi_0, dV_ges=dV_ges, eps_0=eps_0, h_c_0=h_c_0, h_dis_0=h_dis_0, exponent=exponent)
+    Sim = run_sim(exp=exp, phi_0=phi_0, dV_ges=dV_ges, eps_0=eps_0, h_c_0=h_c_0, h_dis_0=h_dis_0)
 
     # Sim.calcInitialConditions()
     # # #Sim.simulate_upwind(veloConst=True) # boolean velo defines whether u is assumed constant or not (default:True)
